@@ -1,6 +1,7 @@
 #region
 
 using System.IO;
+using Core.Attribute;
 using UnityEngine;
 
 #endregion
@@ -10,7 +11,7 @@ namespace Core
     [CreateAssetMenu(fileName = "SceneReference.asset", menuName = "Custom/Scenes/Scene Reference")]
     public class SceneReference : ScriptableObject
     {
-        [SerializeField] [HideInInspector] private string scenePath;
+        [SerializeField] [ReadOnly] private string scenePath;
 
         public string GetSceneName()
         {

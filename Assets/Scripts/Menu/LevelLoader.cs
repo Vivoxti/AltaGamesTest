@@ -1,18 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using Core;
+using Global;
+using LevelData;
 using UnityEngine;
+using UnityEngine.UI;
+using Zenject;
 
-public class LevelLoader : MonoBehaviour
+namespace Menu
 {
-    // Start is called before the first frame update
-    void Start()
+    public class LevelLoader : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private LevelSettings levelSettings;
+        [SerializeField] private SceneReference levelScene;
 
-    // Update is called once per frame
-    void Update()
-    {
+        [SerializeField] private Button levelLoadButton;
         
+        private SceneLoader _sceneLoader;
+        
+        [Inject]
+        private void Inject(SceneLoader sceneLoader)
+        {
+            _sceneLoader = sceneLoader;
+        }
+
+        public static event Action<LevelSettings> LevelLoaded;
+        private static event Action OnLevelLoadingStarted;
+
+        private void OnEnable()
+        {
+            OnLevelLoadingStarted += LevelLoadingStarted;
+            levelLoadButton.onClick.AddListener(LoadLevel);
+        }
+
+        private void OnDisable()
+        {
+            OnLevelLoadingStarted -= LevelLoadingStarted;
+            levelLoadButton.onClick.RemoveListener(LoadLevel);
+        }
+
+        private void LoadLevel()
+        {
+            OnLevelLoadingStarted?.Invoke();
+            _sceneLoader.LoadScene(levelScene.GetSceneName(),gameObject.scene.name,() => LevelLoaded?.Invoke(levelSettings));
+        }
+
+
+        private void LevelLoadingStarted()
+        {
+            levelLoadButton.interactable = false;
+        }
     }
 }

@@ -1,13 +1,21 @@
 using Core;
+using Global;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace EntryScene
 {
     public class Bootstrapper : MonoBehaviour
     {
         [SerializeField] private SceneReference initialScene;
-
+        
+        private SceneLoader _sceneLoader;
+        
+        [Inject]
+        private void Inject(SceneLoader sceneLoader)
+        {
+            _sceneLoader = sceneLoader;
+        }
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
@@ -17,10 +25,7 @@ namespace EntryScene
         private void Initialize()
         {
             var initialSceneName = initialScene.GetSceneName();
-            if (initialSceneName != SceneManager.GetActiveScene().name)
-            {
-                SceneManager.LoadScene(initialSceneName);
-            }
+            _sceneLoader.LoadSceneInstantly(initialSceneName);
         }
     }
 }
