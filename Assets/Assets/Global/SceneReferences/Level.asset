@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88b98d59592ebb447b79c73d29c45d1f, type: 3}
   m_Name: Level
   m_EditorClassIdentifier: 
-  scenePath: Assets/Scenes/EntryScene.unity
+  scenePath: Assets/Scenes/Level.unity
