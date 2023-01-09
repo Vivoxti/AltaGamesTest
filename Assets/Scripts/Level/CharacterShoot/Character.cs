@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using Global;
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -12,26 +12,39 @@ namespace Level.CharacterShoot
         [SerializeField] private GameObject sphereModel;
         [SerializeField] private AnimationCurve chargeTransferSpeedByTime;
         [SerializeField] private Gradient sphereColorByCharge;
+        
+        [Header("Particles")]
+        [SerializeField] private GameObject loseParticlesPrefab;
+        [SerializeField] private float loseParticlesAnimationDuration;
+        [SerializeField] private Vector3 loseParticlesSpawnPosition;
+        
+        [Header("Animations")]
+        [SerializeField] [Range(0f,4f)] private float loseModelHideDuration = 0.2f;
 
         private ShootSystem _shootSystem;
         private LevelSettingsInitializer _levelSettingsInitializer;
+        private LevelStage _levelStage;
 
         private Shell _shell;
         private Coroutine _chargeRoutine;
         private MeshRenderer _sphereMesh;
         
-        public float _charge = 1f;
+        private float _charge = 1f;
         
         private float _chargingTime;
+    
+
+        public float ModelWidth => sphereModel.transform.localScale.x;
 
         public event Action CriticalChargeLevelReached;
         public event Action<Vector3> SphereSizeChanged;
         
         [Inject]
-        private void Inject(ShootSystem shootSystem,LevelSettingsInitializer levelSettingsInitializer)
+        private void Inject(ShootSystem shootSystem, LevelSettingsInitializer levelSettingsInitializer, LevelStage levelStage)
         {
             _shootSystem = shootSystem;
             _levelSettingsInitializer = levelSettingsInitializer;
+            _levelStage = levelStage;
         }
 
         private void Start()
@@ -66,7 +79,7 @@ namespace Level.CharacterShoot
 
         private IEnumerator ChargeRoutine()
         {
-            while (true)
+            while (_levelStage.CurrentStage == LevelStage.Stage.Shooting)
             {
                 TransferCharge();
                 yield return null;
@@ -94,12 +107,20 @@ namespace Level.CharacterShoot
 
             if (!(_charge <= _levelSettingsInitializer.MinCharacterSize)) return;
             CriticalChargeLevelReached?.Invoke();
-            UnityEngine.Debug.LogError("criticalsize");
+            _levelStage.SetStage(LevelStage.Stage.DefeatResult);
+            transform.DOScale(Vector3.zero, loseModelHideDuration).SetEase(Ease.OutCirc);
+            SpawnLoseParticlesPrefab();
         }
         
         private void OnDisable()
         {
             _shootSystem.ActiveStateChanged -= OnActiveStateChanged;
+        }
+        
+        private void SpawnLoseParticlesPrefab()
+        {
+            var explosionParticles = Instantiate(loseParticlesPrefab, transform.position + loseParticlesSpawnPosition, Quaternion.identity);
+            Destroy(explosionParticles,loseParticlesAnimationDuration);
         }
     }
 }

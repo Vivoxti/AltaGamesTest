@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6641690800082376369}
   - component: {fileID: 2336102855666511782}
   - component: {fileID: 2336102855666511783}
+  - component: {fileID: 2336102855666511784}
+  - component: {fileID: 2470780586558336770}
   m_Layer: 0
   m_Name: SphereCharacter
   m_TagString: Untagged
@@ -30,7 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7157264316951694744}
+  - {fileID: 2431165258439755999}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -128,7 +130,11 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
-  _charge: 1
+  loseParticlesPrefab: {fileID: 7134145006435702860, guid: 57d6bd33ed8bca046beeef07b89fb1a1,
+    type: 3}
+  loseParticlesAnimationDuration: 5
+  loseParticlesSpawnPosition: {x: 0, y: 1, z: 0}
+  loseModelHideDuration: 0.2
 --- !u!114 &2336102855666511783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +150,43 @@ MonoBehaviour:
   shellPrefab: {fileID: 7391959723805052579, guid: 01ef03846b33587419154bcfa53031d0,
     type: 3}
   shellSpawnPosition: {x: 0, y: 0, z: 0.9}
+--- !u!111 &2336102855666511784
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479690913771343970}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 1f3d933920e2fd04597e07447b4c328a, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1f3d933920e2fd04597e07447b4c328a, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &2470780586558336770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479690913771343970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b42f8b35c458e9429e5bd59a258dff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveButton: {fileID: 0}
+  characterAnimation: {fileID: 2336102855666511784}
+  hitParticlesPrefab: {fileID: 2142817332363834466, guid: 896c593201451b04e9fdc6bad2e59e95,
+    type: 3}
+  explosionParticlesAnimationDuration: 5
+  explosionParticlesSpawnPosition: {x: 0, y: 0.6, z: 0}
+  winMoveDuration: 2.5
+  loseMoveDuration: 1
+  loseModelHideDuration: 0.2
 --- !u!1 &6368821272605805930
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,12 +212,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6368821272605805930}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6641690800082376369}
+  m_Father: {fileID: 2431165258439755999}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8870835051239042798
@@ -227,3 +270,35 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7766208128912662052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2431165258439755999}
+  m_Layer: 0
+  m_Name: AnimationLayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2431165258439755999
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7766208128912662052}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7157264316951694744}
+  m_Father: {fileID: 6641690800082376369}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

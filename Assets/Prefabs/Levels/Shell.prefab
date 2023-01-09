@@ -169,7 +169,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  shellParticles: {fileID: 0}
+  shellParticles: {fileID: 2453246579857319062}
+  explosionParticlesPrefab: {fileID: 4379063783280845392, guid: 2c6e1376f2eaebf49a9b5bb70c3eead5,
+    type: 3}
+  explosionParticlesAnimationDuration: 5
 --- !u!114 &7700522622058851824
 MonoBehaviour:
   m_ObjectHideFlags: 0

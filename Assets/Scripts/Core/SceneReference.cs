@@ -1,10 +1,6 @@
-#region
-
 using System.IO;
 using Core.Attribute;
 using UnityEngine;
-
-#endregion
 
 namespace Core
 {
