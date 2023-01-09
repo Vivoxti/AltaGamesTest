@@ -74,6 +74,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88c19a2a1c7f73a4788df1be9564ab26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  instantiator: {fileID: 8629919942239420863, guid: cc52198ce784d2f4f8275d7171f7824d,
+    type: 3}
   loadingScreen: {fileID: 6004158629432490748, guid: cb3fc1ff6a29be042a9c4bade28f1ee7,
     type: 3}
   sceneLoader: {fileID: 3954278688612449493, guid: 447a8942755fc0043b5f2bd1a721d490,

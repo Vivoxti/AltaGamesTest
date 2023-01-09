@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-namespace Level
+namespace Level.CharacterShoot
 {
     public class ShootSystem : MonoBehaviour
     {
         private ActiveShootState _activeShootState;
 
-        public static event Action<ActiveShootState> ActiveStateChanged;
+        public event Action<ActiveShootState> ActiveStateChanged;
         private void Update()
         {
             if (Input.touchCount > 0)

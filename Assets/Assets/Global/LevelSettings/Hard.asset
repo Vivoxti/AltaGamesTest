@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstaclesPrefab: {fileID: 642764756727732736, guid: cd6a47afac491ec4d94f9b431a299434,
     type: 3}
-  minCharacterSize: 15
+  minCharacterSize: 25
   shellExplosionRadiusSettings: {fileID: 11400000, guid: 9852adf74e9f8244aad8130f5e2eb493,
     type: 2}

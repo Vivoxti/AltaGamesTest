@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace Global
 {
@@ -15,7 +16,9 @@ namespace Global
 
         private Animator _loadingScreen;
         private bool _isLoadingScreenSpawned;
-
+        
+       
+       
         public IEnumerator ShowLoadingScreenRoutine()
         {
             if (_isLoadingScreenSpawned) yield break;
