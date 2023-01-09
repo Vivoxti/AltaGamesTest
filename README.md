@@ -1,5 +1,5 @@
 # AltaGamesTest
-
+![view](https://github.com/Vivoxti/AltaGamesTest/blob/main/Readme/Gameplay.png)
 ### Gameplay.
 On the screen is the balloon player in the lower left corner, and the target in the upper right corner, where the ball must hit. The path is blocked by obstacles. The ball player creates shots due to its size, you need to clear a path for the ball player to jump along the cleared path to the final goal.
 
