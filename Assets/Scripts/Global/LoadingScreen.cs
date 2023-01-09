@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using Zenject;
 
 namespace Global
 {
@@ -8,23 +7,22 @@ namespace Global
     {
         private static readonly int Loaded = Animator.StringToHash("Loaded");
         private static readonly int Hide = Animator.StringToHash("Hide");
-        
+
         [SerializeField] private GameObject loadingScreenPrefab;
         [SerializeField] private string showAnimatorStateName;
         [SerializeField] private string loadedAnimatorStateName;
         [SerializeField] private string hideAnimatorStateName;
+        private bool _isLoadingScreenSpawned;
 
         private Animator _loadingScreen;
-        private bool _isLoadingScreenSpawned;
-        
-       
-       
+
+
         public IEnumerator ShowLoadingScreenRoutine()
         {
             if (_isLoadingScreenSpawned) yield break;
             _loadingScreen = Instantiate(loadingScreenPrefab).GetComponent<Animator>();
             DontDestroyOnLoad(_loadingScreen.gameObject);
-            
+
             _isLoadingScreenSpawned = true;
             yield return new WaitUntil(() => _loadingScreen.GetCurrentAnimatorStateInfo(0).IsName(showAnimatorStateName));
         }
@@ -36,7 +34,6 @@ namespace Global
             yield return new WaitUntil(() => _loadingScreen.GetCurrentAnimatorStateInfo(0).IsName(loadedAnimatorStateName));
         }
 
-      
 
         public IEnumerator HideLoadingScreenRoutine()
         {

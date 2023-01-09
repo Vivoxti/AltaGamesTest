@@ -38,7 +38,7 @@ namespace Level.UI
         private void OpenMenu()
         {
             _menuButton.interactable = false;
-            _sceneLoader.LoadScene(menuScene.GetSceneName(),gameObject.scene.name);
+            _sceneLoader.LoadScene(menuScene.GetSceneName(), gameObject.scene.name);
         }
     }
 }

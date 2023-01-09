@@ -15,15 +15,9 @@ namespace Level.CharacterShoot
         [SerializeField] private ShootPointerArea shootPointerArea;
 
         private ActiveShootState _activeShootState;
-        
+
         private LevelStage _levelStage;
 
-        [Inject]
-        private void Inject(LevelStage levelStage)
-        {
-            _levelStage = levelStage;
-        }
-        
         private void OnEnable()
         {
             shootPointerArea.OnTapStarted += ShootPointerAreaOnOnTapStarted;
@@ -34,6 +28,12 @@ namespace Level.CharacterShoot
         {
             shootPointerArea.OnTapStarted -= ShootPointerAreaOnOnTapStarted;
             shootPointerArea.OnTapFinished -= ShootPointerAreaOnOnTapFinished;
+        }
+
+        [Inject]
+        private void Inject(LevelStage levelStage)
+        {
+            _levelStage = levelStage;
         }
 
         public event Action<ActiveShootState> ActiveStateChanged;

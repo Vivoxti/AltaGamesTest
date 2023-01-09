@@ -8,16 +8,21 @@ namespace Level
 {
     public class LevelSettingsInitializer : MonoBehaviour
     {
-        private LevelSettings _settings;
         private LevelStage _levelStage;
-        public float MinCharacterSize => _settings.MinCharacterSize/100f;
+        private LevelSettings _settings;
+        public float MinCharacterSize => _settings.MinCharacterSize / 100f;
+        public GameObject ObstaclesPrefab => _settings.ObstaclesPrefab;
+
+        private void Awake()
+        {
+            LevelLoader.LevelLoaded += InitializeLevelSettings;
+        }
 
         public float GetExplosionAreaRadius(float shellCharge)
         {
-           return _settings.ShellExplosionRadiusSettings.GetExplosionRadius(shellCharge);
+            return _settings.ShellExplosionRadiusSettings.GetExplosionRadius(shellCharge);
         }
 
-  
 
         [Inject]
         private void Inject(LevelStage levelStage)
@@ -26,11 +31,6 @@ namespace Level
         }
 
         public event Action SettingsLoaded;
-        public GameObject ObstaclesPrefab => _settings.ObstaclesPrefab;
-        private void Awake()
-        {
-            LevelLoader.LevelLoaded += InitializeLevelSettings;
-        }
 
         private void InitializeLevelSettings(LevelSettings settings)
         {

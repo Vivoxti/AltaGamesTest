@@ -8,11 +8,10 @@ namespace Global
 {
     public class SceneLoader : MonoBehaviour
     {
+        private const float SceneLoadingCompleteProgress = 0.87f;
         private AsyncOperation _levelSceneLoading;
         private LoadingScreen _loadingScreen;
-        
-        private const float SceneLoadingCompleteProgress = 0.87f;
-        
+
         [Inject]
         private void Inject(LoadingScreen loadingScreen)
         {
@@ -21,25 +20,19 @@ namespace Global
 
         public void LoadSceneInstantly(string sceneName)
         {
-            if (SceneManager.GetActiveScene().name != sceneName)
-            {
-                SceneManager.LoadScene(sceneName);
-            }
+            if (SceneManager.GetActiveScene().name != sceneName) SceneManager.LoadScene(sceneName);
         }
-        
+
         public void LoadScene(string sceneName, string previousScene, Action sceneLoadedCallback = null)
         {
-            if (sceneName != previousScene && SceneManager.GetActiveScene().name != sceneName)
-            {
-                StartCoroutine(LoadSceneRoutine(sceneName,sceneLoadedCallback,previousScene)); 
-            }
+            if (sceneName != previousScene && SceneManager.GetActiveScene().name != sceneName) StartCoroutine(LoadSceneRoutine(sceneName, sceneLoadedCallback, previousScene));
         }
-        
-        private IEnumerator LoadSceneRoutine(string sceneName,Action sceneLoadedCallback = null, string previousScene = "")
+
+        private IEnumerator LoadSceneRoutine(string sceneName, Action sceneLoadedCallback = null, string previousScene = "")
         {
             _levelSceneLoading = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             _levelSceneLoading.allowSceneActivation = false;
-            
+
             yield return _loadingScreen.ShowLoadingScreenRoutine();
             yield return new WaitWhile(() => _levelSceneLoading.progress < SceneLoadingCompleteProgress);
 
@@ -48,19 +41,15 @@ namespace Global
 
             yield return new WaitUntil(() => loadingScene.isLoaded);
             yield return _loadingScreen.HideLoadingScreenProgressViewRoutine();
-            
+
             sceneLoadedCallback?.Invoke();
 
             if (previousScene != string.Empty)
-            {
                 yield return UnloadMenuScene(previousScene);
-            }
             else
-            {
                 yield return _loadingScreen.HideLoadingScreenRoutine();
-            }
         }
-        
+
         private IEnumerator UnloadMenuScene(string previousSceneName)
         {
             var previousScene = SceneManager.GetSceneByName(previousSceneName);

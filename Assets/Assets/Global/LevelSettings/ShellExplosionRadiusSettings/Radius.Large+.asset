@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d759ada6e787074197518b9695112e1, type: 3}
-  m_Name: Radius.Default
+  m_Name: Radius.Large+
   m_EditorClassIdentifier: 
   explosionRadiusByShellSize:
     serializedVersion: 2
@@ -18,24 +18,24 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 4.6528225
+      outSlope: 4.6528225
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.26323658
     - serializedVersion: 3
-      time: 0.4363189
-      value: 4.0166
-      inSlope: 14.436779
-      outSlope: 14.436779
+      time: 0.20069268
+      value: 1.7569413
+      inSlope: 5.4649262
+      outSlope: 5.4649262
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.23134914
+      outWeight: 0.06977425
     - serializedVersion: 3
-      time: 0.9969016
-      value: 3.776372
+      time: 1.0136251
+      value: 3.9790697
       inSlope: -0.3655699
       outSlope: -0.3655699
       tangentMode: 0

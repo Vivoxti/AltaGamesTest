@@ -9,9 +9,9 @@ namespace Level
     public class ObstacleContainer : MonoBehaviour
     {
         private Character _character;
-        private LevelSettingsInitializer _levelSettingsInitializer;
         private Door _door;
-        
+        private LevelSettingsInitializer _levelSettingsInitializer;
+
         private List<Obstacle> _obstacles = new();
 
         private void Awake()
@@ -58,13 +58,12 @@ namespace Level
             foreach (var obstacle in _obstacles)
             {
                 var pathAreaBorders = new Vector2(launchPosition.x - _character.ModelWidth / 2f, launchPosition.x + _character.ModelWidth / 2f);
-                var isInBorders = obstacle.CollisionPoint.position.x >= pathAreaBorders.x && obstacle.CollisionPoint.position.x <= pathAreaBorders.y;
-                
-                if (obstacle.IsHealthy && isInBorders && _door.FinalPoint.z > obstacle.CollisionPoint.position.z)
-                {
-                    hitObstacle = obstacle.CollisionPoint;
-                    break;
-                }
+                var collisionPointPosition = obstacle.CollisionPoint.position;
+                var isInBorders = collisionPointPosition.x >= pathAreaBorders.x && collisionPointPosition.x <= pathAreaBorders.y;
+
+                if (!obstacle.IsHealthy || !isInBorders || !(_door.FinalPoint.z > obstacle.CollisionPoint.position.z)) continue;
+                hitObstacle = obstacle.CollisionPoint;
+                break;
             }
 
             return hitObstacle;
@@ -77,10 +76,7 @@ namespace Level
             {
                 var collisionObstaclePoint = obstacle.CollisionPoint.position;
                 var obstaclePosition = new Vector2(collisionObstaclePoint.x, collisionObstaclePoint.z);
-                if (Vector2.Distance(obstaclePosition, findCenterPosition) <= radius)
-                {
-                    hitObstacle.Add(obstacle);
-                }
+                if (Vector2.Distance(obstaclePosition, findCenterPosition) <= radius) hitObstacle.Add(obstacle);
             }
 
             return hitObstacle;

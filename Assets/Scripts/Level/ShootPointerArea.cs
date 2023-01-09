@@ -6,17 +6,17 @@ namespace Level
 {
     public class ShootPointerArea : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        public event Action OnTapStarted;
-        public event Action OnTapFinished;
-
-         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+        void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
             OnTapStarted?.Invoke();
         }
 
-         void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
+        void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
         {
             OnTapFinished?.Invoke();
         }
+
+        public event Action OnTapStarted;
+        public event Action OnTapFinished;
     }
 }

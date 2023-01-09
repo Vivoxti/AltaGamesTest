@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db1c99a779b6504aaab41aeaa6c6894, type: 3}
   m_Name: Easy
   m_EditorClassIdentifier: 
-  obstaclesPrefab: {fileID: 642764756727732736, guid: cd6a47afac491ec4d94f9b431a299434,
+  obstaclesPrefab: {fileID: 4290010207586948760, guid: 3fa5515dc6cf6b84c87731aeb9462936,
     type: 3}
-  minCharacterSize: 10
+  minCharacterSize: 20
   shellExplosionRadiusSettings: {fileID: 11400000, guid: 0afe57107c754084baa1257f5b57e3fd,
     type: 2}

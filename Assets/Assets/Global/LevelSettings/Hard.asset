@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db1c99a779b6504aaab41aeaa6c6894, type: 3}
   m_Name: Hard
   m_EditorClassIdentifier: 
-  obstaclesPrefab: {fileID: 642764756727732736, guid: cd6a47afac491ec4d94f9b431a299434,
+  obstaclesPrefab: {fileID: 1720028038068682132, guid: 1cd2a0ab83988f44388c8518005f0a45,
     type: 3}
-  minCharacterSize: 25
-  shellExplosionRadiusSettings: {fileID: 11400000, guid: 9852adf74e9f8244aad8130f5e2eb493,
+  minCharacterSize: 22
+  shellExplosionRadiusSettings: {fileID: 11400000, guid: b44e155cde5587e4cb43c880c2078632,
     type: 2}

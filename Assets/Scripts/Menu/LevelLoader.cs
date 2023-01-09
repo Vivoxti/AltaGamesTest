@@ -14,17 +14,8 @@ namespace Menu
         [SerializeField] private SceneReference levelScene;
 
         [SerializeField] private Button levelLoadButton;
-        
-        private SceneLoader _sceneLoader;
-        
-        [Inject]
-        private void Inject(SceneLoader sceneLoader)
-        {
-            _sceneLoader = sceneLoader;
-        }
 
-        public static event Action<LevelSettings> LevelLoaded;
-        private static event Action OnLevelLoadingStarted;
+        private SceneLoader _sceneLoader;
 
         private void OnEnable()
         {
@@ -38,10 +29,19 @@ namespace Menu
             levelLoadButton.onClick.RemoveListener(LoadLevel);
         }
 
+        [Inject]
+        private void Inject(SceneLoader sceneLoader)
+        {
+            _sceneLoader = sceneLoader;
+        }
+
+        public static event Action<LevelSettings> LevelLoaded;
+        private static event Action OnLevelLoadingStarted;
+
         private void LoadLevel()
         {
             OnLevelLoadingStarted?.Invoke();
-            _sceneLoader.LoadScene(levelScene.GetSceneName(),gameObject.scene.name,() => LevelLoaded?.Invoke(levelSettings));
+            _sceneLoader.LoadScene(levelScene.GetSceneName(), gameObject.scene.name, () => LevelLoaded?.Invoke(levelSettings));
         }
 
 

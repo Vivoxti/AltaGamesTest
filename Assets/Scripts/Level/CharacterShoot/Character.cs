@@ -12,40 +12,29 @@ namespace Level.CharacterShoot
         [SerializeField] private GameObject sphereModel;
         [SerializeField] private AnimationCurve chargeTransferSpeedByTime;
         [SerializeField] private Gradient sphereColorByCharge;
-        
-        [Header("Particles")]
-        [SerializeField] private GameObject loseParticlesPrefab;
+
+        [Header("Particles")] [SerializeField] private GameObject loseParticlesPrefab;
+
         [SerializeField] private float loseParticlesAnimationDuration;
         [SerializeField] private Vector3 loseParticlesSpawnPosition;
-        
-        [Header("Animations")]
-        [SerializeField] [Range(0f,4f)] private float loseModelHideDuration = 0.2f;
 
-        private ShootSystem _shootSystem;
+        [Header("Animations")] [SerializeField] [Range(0f, 4f)]
+        private float loseModelHideDuration = 0.2f;
+
+        private float _charge = 1f;
+        private Coroutine _chargeRoutine;
+
+        private float _chargingTime;
         private LevelSettingsInitializer _levelSettingsInitializer;
         private LevelStage _levelStage;
 
         private Shell _shell;
-        private Coroutine _chargeRoutine;
+
+        private ShootSystem _shootSystem;
         private MeshRenderer _sphereMesh;
-        
-        private float _charge = 1f;
-        
-        private float _chargingTime;
-    
+
 
         public float ModelWidth => sphereModel.transform.localScale.x;
-
-        public event Action CriticalChargeLevelReached;
-        public event Action<Vector3> SphereSizeChanged;
-        
-        [Inject]
-        private void Inject(ShootSystem shootSystem, LevelSettingsInitializer levelSettingsInitializer, LevelStage levelStage)
-        {
-            _shootSystem = shootSystem;
-            _levelSettingsInitializer = levelSettingsInitializer;
-            _levelStage = levelStage;
-        }
 
         private void Start()
         {
@@ -57,13 +46,29 @@ namespace Level.CharacterShoot
             _shootSystem.ActiveStateChanged += OnActiveStateChanged;
         }
 
+        private void OnDisable()
+        {
+            _shootSystem.ActiveStateChanged -= OnActiveStateChanged;
+        }
+
+        public event Action CriticalChargeLevelReached;
+        public event Action<Vector3> SphereSizeChanged;
+
+        [Inject]
+        private void Inject(ShootSystem shootSystem, LevelSettingsInitializer levelSettingsInitializer, LevelStage levelStage)
+        {
+            _shootSystem = shootSystem;
+            _levelSettingsInitializer = levelSettingsInitializer;
+            _levelStage = levelStage;
+        }
+
         private void OnActiveStateChanged(ShootSystem.ActiveShootState state)
         {
             if (state == ShootSystem.ActiveShootState.Charge)
             {
                 ActivateChargeMode();
             }
-            else if(_shell != null)
+            else if (_shell != null)
             {
                 StopCoroutine(_chargeRoutine);
                 _shell.Launch();
@@ -93,16 +98,16 @@ namespace Level.CharacterShoot
             ReduceCharacterCharge(chargeValue);
             _shell.Boost(chargeValue);
         }
-        
+
         private void ReduceCharacterCharge(float chargeValue)
         {
             _charge -= chargeValue;
-            
+
             sphereModel.transform.localScale = Vector3.one * _charge;
 
             var currentColorValue = (1f - _levelSettingsInitializer.MinCharacterSize) * _charge + _levelSettingsInitializer.MinCharacterSize;
             _sphereMesh.material.color = sphereColorByCharge.Evaluate(currentColorValue);
-            
+
             SphereSizeChanged?.Invoke(sphereModel.transform.localScale);
 
             if (!(_charge <= _levelSettingsInitializer.MinCharacterSize)) return;
@@ -111,16 +116,11 @@ namespace Level.CharacterShoot
             transform.DOScale(Vector3.zero, loseModelHideDuration).SetEase(Ease.OutCirc);
             SpawnLoseParticlesPrefab();
         }
-        
-        private void OnDisable()
-        {
-            _shootSystem.ActiveStateChanged -= OnActiveStateChanged;
-        }
-        
+
         private void SpawnLoseParticlesPrefab()
         {
             var explosionParticles = Instantiate(loseParticlesPrefab, transform.position + loseParticlesSpawnPosition, Quaternion.identity);
-            Destroy(explosionParticles,loseParticlesAnimationDuration);
+            Destroy(explosionParticles, loseParticlesAnimationDuration);
         }
     }
 }

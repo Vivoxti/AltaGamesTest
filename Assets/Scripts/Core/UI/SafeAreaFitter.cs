@@ -43,7 +43,7 @@ namespace Core.UI
         {
             var safeArea = Screen.safeArea;
             if (safeArea == _safeArea) return;
-            
+
             _safeArea = safeArea;
 
             var bottomPixels = Screen.safeArea.y;
